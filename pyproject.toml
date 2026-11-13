@@ -10,7 +10,7 @@ readme = "README.md"
 authors = [{ name = "AI Robot Association (AIRoA)", email = "ext-oss@airoa.org" }]
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE", "THIRD_PARTY.md", "vendor/openpi/LICENSE", "vendor/openpi/LICENSE_GEMMA.txt"]
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = ["jax==0.5.3", "numpy>=2.0,<2.3"]
 
 [project.urls]
