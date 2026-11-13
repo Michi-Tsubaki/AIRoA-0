@@ -84,6 +84,7 @@ class Inputs(transforms.DataTransformFn):
     history_slots: int = 0
     history_valid_key: str = ""
     history_time_key: str = "timestamp"
+    absolute_tcp_reference_key: str = ""
 
     def __call__(self, record):
         state = np.asarray(get_field(record, self.state_key), dtype=np.float32)
@@ -191,6 +192,12 @@ class Inputs(transforms.DataTransformFn):
         dimensions = dimensions & temporal[..., None]
         if not np.isfinite(actions[dimensions]).all():
             raise ValueError("Eligible action targets must be finite")
+        if self.absolute_tcp_reference_key:
+            from post_training.action_frames import relative_tcp_actions
+
+            actions = relative_tcp_actions(
+                actions, get_field(record, self.absolute_tcp_reference_key), dimensions
+            )
         result["actions"] = np.where(dimensions, actions, 0.0)
         result["action_time_valid_mask"] = temporal
         result["action_time_dim_valid_mask"] = dimensions

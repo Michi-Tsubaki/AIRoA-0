@@ -185,6 +185,7 @@ def build(settings, run_name, *, resume=False):
         history_slots=history["slots"],
         history_valid_key=d["history_valid_key"],
         history_time_key=d["history_time_key"],
+        absolute_tcp_reference_key=d.get("absolute_tcp_reference_key", ""),
     )
     data = LeRobotData(
         repo_id=d["repo_id"],

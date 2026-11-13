@@ -108,6 +108,7 @@ class Settings:
                 "cameras",
                 "history_valid_key",
                 "history_time_key",
+                "absolute_tcp_reference_key",
             },
             "model": {
                 "action_horizon",
@@ -165,6 +166,10 @@ class Settings:
                 )
         data, model, training = (raw[k] for k in ("data", "model", "training"))
         history = raw["proprio_history"]
+        if not isinstance(data.get("absolute_tcp_reference_key", ""), str):
+            raise ValueError("absolute_tcp_reference_key must be a feature name or empty")
+        if data.get("absolute_tcp_reference_key") and data["action_dim"] != 20:
+            raise ValueError("Absolute TCP action conversion requires action_dim = 20")
         if type(history["slots"]) is not int or history["slots"] < 0:
             raise ValueError("proprio_history.slots must be a nonnegative integer")
         if (

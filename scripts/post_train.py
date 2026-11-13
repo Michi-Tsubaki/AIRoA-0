@@ -48,6 +48,10 @@ def dataset_info(settings, config):
     meta = LeRobotDatasetMetadata(config.data.repo_id)
     data = settings.raw["data"]
     required = [data["state_key"], data["action_key"], *data["cameras"].values()]
+    if data.get("absolute_tcp_reference_key"):
+        required.append(data["absolute_tcp_reference_key"])
+        if tuple(meta.features.get(data["absolute_tcp_reference_key"], {}).get("shape", ())) != (18,):
+            raise ValueError("Absolute TCP reference must be a feature with shape (18,)")
     if settings.raw.get("proprio_history", {}).get("slots", 0):
         required.append(data.get("history_time_key", "timestamp"))
         if data.get("history_valid_key"):
