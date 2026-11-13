@@ -18,20 +18,22 @@ implementation.
 
 ## Install
 
-Use Python 3.11, Linux and an NVIDIA GPU with a compatible CUDA 12 driver.
+Use Python 3.12, uv, Linux and an NVIDIA GPU with a compatible CUDA 12 driver.
 Video datasets also require FFmpeg shared libraries available to TorchCodec;
 see its [installation guide](https://github.com/meta-pytorch/torchcodec#installing-torchcodec).
 
 ```sh
-python3.11 -m venv .venv
+uv sync --locked --extra train --extra test
 . .venv/bin/activate
-python -m pip install -e '.[train,test]'
 cp configs/post_training.toml configs/local.toml
 ```
 
 Provide the pretrained weights and your dataset. The tokenizer is downloaded on
 first use. For online W&B logging, run `wandb login` before training; set
 `training.wandb = false` to use local logging instead.
+
+The `.python-version` file selects Python 3.12. `run.sh` uses uv to run in the
+project environment, including when the virtual environment is not activated.
 
 ## Configure
 

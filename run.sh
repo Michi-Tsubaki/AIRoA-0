@@ -3,4 +3,4 @@
 # SPDX-License-Identifier: Apache-2.0
 set -euo pipefail
 repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-exec python "$repo_dir/scripts/post_train.py" "$@"
+exec uv run --project "$repo_dir" --locked --extra train --extra test python "$repo_dir/scripts/post_train.py" "$@"

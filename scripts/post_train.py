@@ -16,9 +16,9 @@ import socket
 import sys
 import time
 
-if sys.version_info < (3, 11):
+if sys.version_info < (3, 12):
     raise SystemExit(
-        "Python 3.11+ is required. Use ./run.sh or the pinned environment."
+        "Python 3.12+ is required. Use ./run.sh or the pinned environment."
     )
 
 ROOT = Path(__file__).resolve().parents[1]
